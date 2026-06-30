@@ -1,0 +1,9 @@
+# Local source material and generated extraction outputs are not published by default.
+clases/
+tmp/
+output/
+
+# Dependencies and local machine noise.
+node_modules/
+.playwright-cli/
+.DS_Store
