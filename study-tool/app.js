@@ -1081,6 +1081,544 @@ const cases = [
         text: "La cuenta compartida rompe accountability. Aunque agregues MFA, si no hay usuarios nominales y permisos granulares, el riesgo central sigue vivo."
       }
     ]
+  },
+  {
+    id: "UA-06",
+    topic: "Privacidad",
+    sourceGroup: "Casos agregados",
+    title: "Camaras inteligentes en residencia geriatrica",
+    source: "Casos adjuntos por usuario, Caso 1",
+    status: "Revisado",
+    summary: "Una residencia usa camaras con IA que graban video y audio de forma continua, con procesamiento cloud y accesos internos sin justificacion clara.",
+    prompt: {
+      context: [
+        "Una residencia geriatrica instala camaras inteligentes en pasillos y salas comunes para detectar caidas, desorientacion de pacientes y emergencias.",
+        "El proveedor procesa imagenes en la nube. Para mejorar deteccion, las camaras graban video y audio de forma continua.",
+        "Las grabaciones pueden ser vistas por enfermeria, supervisores y tecnicos del proveedor. Las familias reciben una explicacion general, pero no detalles sobre grabacion, retencion, accesos ni entrenamiento de algoritmos.",
+        "Durante una revision se detecta que empleados acceden a grabaciones antiguas sin justificacion medica o asistencial clara."
+      ],
+      questions: [
+        "Identifique las principales amenazas de seguridad y privacidad.",
+        "Explique que problemas aparecen por el uso de video y audio en un contexto sensible.",
+        "Proponga controles tecnicos y organizacionales para limitar accesos indebidos.",
+        "Indique que informacion deberia recibir el paciente o su familia antes de implementar el sistema.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: exposicion de imagenes, voz, rutinas y datos de salud inferidos; vigilancia excesiva; accesos internos indebidos; acceso del proveedor; retencion excesiva; uso secundario para entrenamiento; filtracion o extorsion.",
+          "Video y audio son especialmente invasivos porque capturan contexto completo: identidad, estado fisico, conversaciones, visitas, situaciones intimas y terceros que no necesariamente consintieron.",
+          "Controles tecnicos: RBAC, MFA, logs auditables, alertas por accesos inusuales, retencion limitada, grabacion por evento, cifrado, segmentacion, procesamiento local o en borde y no-training contractual/tecnico.",
+          "Controles organizacionales: politica de videovigilancia e IA, evaluacion de impacto de privacidad, capacitacion, procedimiento de autorizacion para ver grabaciones, revision periodica de accesos y contrato fuerte con proveedor.",
+          "Informacion previa: zonas grabadas, si hay audio, finalidad, almacenamiento, plazo de retencion, quienes acceden, rol del proveedor, uso para entrenamiento, derechos y canal de reclamo.",
+          "CIA: confidencialidad es la principal; integridad si se manipulan grabaciones o fallan alertas; disponibilidad si el sistema cae y se depende de el para emergencias."
+        ]
+      },
+      {
+        title: "Amenazas clave",
+        bullets: [
+          "Exposicion de datos personales y de salud inferidos, aunque no se trate de una historia clinica formal.",
+          "Vigilancia continua desproporcionada frente a la finalidad asistencial.",
+          "Acceso por curiosidad o abuso interno a grabaciones antiguas.",
+          "Soporte externo con visibilidad sobre videos sin controles equivalentes a los internos.",
+          "Uso de grabaciones para mejorar algoritmos sin autorizacion clara.",
+          "Retencion prolongada que aumenta el impacto de una brecha."
+        ]
+      },
+      {
+        title: "Video y audio en contexto sensible",
+        paragraphs: [
+          "En una residencia geriatrica los residentes son personas vulnerables. Una grabacion puede revelar movilidad reducida, deterioro cognitivo, medicacion, conflictos familiares, visitas o conversaciones sobre diagnosticos.",
+          "El audio agrava el riesgo porque captura conversaciones privadas y datos de terceros. Aunque sean espacios comunes, sigue existiendo expectativa razonable de privacidad."
+        ]
+      },
+      {
+        title: "Controles",
+        bullets: [
+          "Acceso por rol y necesidad asistencial: enfermeria, supervision y proveedor no deberian ver lo mismo.",
+          "MFA, cifrado, segmentacion de red y hardening de camaras.",
+          "Registro de quien vio que video, cuando, desde donde y con que justificacion.",
+          "Alertas por accesos fuera de horario, volumen inusual o consultas sin relacion asistencial.",
+          "Retencion corta y preservacion solo ante incidentes concretos.",
+          "Preferir grabacion por evento y procesamiento local cuando sea posible."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "El fin de seguridad asistencial puede ser legitimo, pero no habilita vigilancia continua sin proporcionalidad, transparencia y control estricto de accesos."
+      }
+    ]
+  },
+  {
+    id: "UA-07",
+    topic: "IA",
+    sourceGroup: "Casos agregados",
+    title: "RRHH con evaluacion automatica de candidatos",
+    source: "Casos adjuntos por usuario, Caso 2",
+    status: "Revisado",
+    summary: "Una plataforma externa analiza CV, entrevistas, voz y expresiones faciales para puntuar candidatos, con baja transparencia del modelo y del proveedor.",
+    prompt: {
+      context: [
+        "Una empresa usa una plataforma externa para seleccionar personal. La herramienta analiza CV, entrevistas grabadas, tono de voz, expresiones faciales y respuestas tecnicas.",
+        "El sistema asigna un puntaje automatico y recomienda si el candidato avanza. Los reclutadores suelen seguir la recomendacion sin revisar demasiado el criterio.",
+        "La empresa carga datos personales, antecedentes laborales, pretensiones salariales, tests psicotecnicos y observaciones internas.",
+        "El proveedor no explica claramente como funciona el modelo, si conserva videos para entrenar futuros sistemas ni si transfiere informacion a otros paises."
+      ],
+      questions: [
+        "Identifique riesgos de seguridad, privacidad y uso indebido de datos.",
+        "Explique por que la minimizacion de datos es importante.",
+        "Proponga controles para reducir riesgos tecnicos, legales y eticos.",
+        "Indique al menos 3 preguntas que la empresa deberia hacerle al proveedor antes de contratarlo.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Riesgos: exposicion de datos personales, tratamiento de datos sensibles o altamente invasivos, sesgos, decisiones opacas, uso para entrenamiento, transferencia internacional no controlada, retencion excesiva y dependencia ciega del puntaje.",
+          "Minimizacion: la empresa debe recolectar solo datos vinculados al puesto; analizar rostro, tono o microgestos puede ser innecesario, invasivo y discriminatorio.",
+          "Controles: cifrado, RBAC, MFA, logs, retencion limitada, no-training, explicabilidad minima, auditorias de sesgo, revision humana obligatoria y desactivacion de funciones invasivas.",
+          "Controles legales/eticos: informacion clara al candidato, politica de IA en seleccion, criterios documentados, derecho a revision y contrato con seguridad, borrado, subprocesadores y auditoria.",
+          "Preguntas al proveedor: si entrena con datos de candidatos, donde almacena/procesa, que variables usa, que auditorias de sesgo tiene, cuanto retiene, que subprocesadores intervienen y como elimina datos.",
+          "CIA: confidencialidad por CV/videos/tests; integridad por puntajes erroneos o sesgados; disponibilidad si la plataforma cae y bloquea contrataciones."
+        ]
+      },
+      {
+        title: "Riesgos principales",
+        bullets: [
+          "Datos laborales, salariales, psicotecnicos y entrevistas pueden exponer informacion muy sensible.",
+          "Analisis facial o de voz puede introducir sesgos por edad, genero, discapacidad, acento, aspecto fisico o forma de expresarse.",
+          "El proveedor podria reutilizar videos o CV para fines no informados.",
+          "La recomendacion automatica puede convertirse en decision de hecho si el humano no revisa.",
+          "Las transferencias internacionales y subprocesadores amplian la superficie legal y tecnica."
+        ]
+      },
+      {
+        title: "Preguntas al proveedor",
+        ordered: [
+          "Usan CV, videos o entrevistas para entrenar modelos? Importa para evitar uso secundario no autorizado.",
+          "Donde se almacenan y procesan los datos? Define jurisdiccion y transferencias internacionales.",
+          "Que variables usa el sistema para puntuar? Permite detectar criterios invasivos o discriminatorios.",
+          "Tienen auditorias de sesgo independientes? Sirve para evaluar justicia y calidad del modelo.",
+          "Cuanto tiempo retienen datos y como los eliminan? Reduce exposicion futura.",
+          "Que logs y reportes de auditoria entregan? Permite investigar accesos o decisiones cuestionadas."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "El riesgo no es solo una filtracion: tambien es descartar personas mediante un sistema opaco, posiblemente sesgado y alimentado con datos excesivos."
+      }
+    ]
+  },
+  {
+    id: "UA-08",
+    topic: "IoT",
+    sourceGroup: "Casos agregados",
+    title: "Sensores IoT industriales manipulados",
+    source: "Casos adjuntos por usuario, Caso 3",
+    status: "Revisado",
+    summary: "Una fabrica deja sensores con credenciales por defecto y panel expuesto; los datos falsos ocultan fallas fisicas y terminan danando una linea.",
+    prompt: {
+      context: [
+        "Una fabrica instala sensores IoT para controlar temperatura, humedad, vibracion y estado de maquinas criticas, enviando datos en tiempo real a una plataforma cloud.",
+        "Muchos dispositivos quedan con credenciales por defecto. El panel de administracion es accesible desde Internet y permite modificar parametros de funcionamiento.",
+        "Produccion decide detener equipos, hacer mantenimiento o continuar operando segun esos datos.",
+        "Un dia, varios sensores muestran valores normales aunque las maquinas presentan fallas fisicas. Horas despues, una linea se detiene por dano mecanico."
+      ],
+      questions: [
+        "Identifique las amenazas de seguridad presentes.",
+        "Explique por que la manipulacion de sensores puede ser mas grave que la simple perdida de informacion.",
+        "Proponga controles preventivos y detectivos para proteger dispositivos IoT y plataforma.",
+        "Indique que registros serian utiles para investigar el incidente.",
+        "Explique que parte de la triada CIA se ve afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: credenciales por defecto, panel expuesto a Internet, falta de MFA, toma de control de sensores, manipulacion de telemetria, sabotaje industrial, firmware vulnerable, falta de segmentacion y movimiento lateral.",
+          "Manipular sensores puede ser peor que robar datos porque produce decisiones fisicas equivocadas: continuar una maquina que debe detenerse, omitir mantenimiento o generar dano y riesgo a personas.",
+          "Preventivos: cambio de credenciales, credenciales unicas, MFA, panel no publico, VPN/ZTNA restringida, segmentacion OT/IoT/IT, certificados por dispositivo, firmware firmado, hardening, inventario y minimo privilegio.",
+          "Detectivos: alertas por cambios de configuracion, telemetria congelada o incoherente, comparacion con sensores redundantes, IDS industrial, SIEM, reinicios inesperados y firmware modificado.",
+          "Registros: accesos al panel, IP, usuario, horarios, comandos, configuracion anterior/nueva, firmware, lecturas historicas, alarmas silenciadas, reinicios y eventos de mantenimiento.",
+          "CIA: integridad es la principal; disponibilidad por parada productiva; confidencialidad si se filtra informacion operativa."
+        ]
+      },
+      {
+        title: "Impacto operativo",
+        paragraphs: [
+          "En IoT industrial, el dato controla decisiones sobre procesos fisicos. Un valor falso puede crear una falsa sensacion de seguridad y provocar dano mecanico, produccion defectuosa o riesgo para operarios."
+        ]
+      },
+      {
+        title: "Controles detectivos a defender",
+        matrix: [
+          ["Cambios de configuracion", "Detecta modificacion de umbrales, reglas o parametros usados para ocultar fallas."],
+          ["Anomalias de telemetria", "Detecta valores demasiado perfectos, congelados o incompatibles con el historial."],
+          ["Sensores redundantes", "Compara mediciones esperadas entre dispositivos para descubrir discrepancias."],
+          ["IDS industrial", "Detecta trafico anomalo entre sensores, maquinas y plataforma cloud."],
+          ["Firmware/reinicios", "Detecta compromiso de dispositivo o mantenimiento no autorizado."]
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "En este caso el corazon no es confidencialidad sino integridad: datos falsos pueden romper maquinas y afectar seguridad fisica."
+      }
+    ]
+  },
+  {
+    id: "UA-09",
+    topic: "AppSec",
+    sourceGroup: "Casos agregados",
+    title: "Portal municipal con PDFs predecibles",
+    source: "Casos adjuntos por usuario, Caso 4",
+    status: "Revisado",
+    summary: "Un municipio envia enlaces directos a documentos PDF sin login y con nombres secuenciales, permitiendo descargar certificados ajenos.",
+    prompt: {
+      context: [
+        "Un municipio permite descargar certificados, multas, habilitaciones y constancias de pago.",
+        "Cada documento queda como PDF en una carpeta cloud y se envia un enlace directo sin login, con estructura predecible como /documentos/certificado_2026_000348.pdf.",
+        "Un vecino cambia el numero final y descarga certificados de otras personas y comercios con DNI, domicilio, CUIT, datos impositivos, deudas y observaciones.",
+        "El municipio no tiene alertas por descargas masivas ni sabe cuantas personas accedieron a documentos ajenos."
+      ],
+      questions: [
+        "Explique que vulnerabilidades aparecen.",
+        "Identifique riesgos para ciudadanos y municipio.",
+        "Proponga al menos 4 controles para evitar accesos indebidos.",
+        "Indique que evidencias deberia conservar el sistema.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Vulnerabilidades: falta de autenticacion, falta de autorizacion por documento, enlaces publicos permanentes, nombres predecibles, IDOR/BOLA, almacenamiento cloud posiblemente publico, falta de rate limiting y monitoreo.",
+          "Riesgos ciudadanos: exposicion de DNI, domicilio, CUIT, deudas y datos impositivos; robo de identidad, fraude, extorsion y estafas dirigidas.",
+          "Riesgos municipio: dano reputacional, reclamos, sanciones, obligacion de investigar/notificar, perdida de confianza e interrupcion del portal.",
+          "Controles: login obligatorio, autorizacion server-side por objeto, enlaces firmados temporales, almacenamiento privado, IDs no predecibles, rate limiting, alertas, minimizacion de PDFs y pruebas de IDOR.",
+          "Evidencias: usuario, documento, titular, hora, IP, user-agent, resultado, token, descargas por usuario, intentos secuenciales y cambios de permisos cloud.",
+          "CIA: confidencialidad es la principal; integridad si se modifican documentos; disponibilidad ante abuso masivo o cierre preventivo."
+        ]
+      },
+      {
+        title: "Control que no debe faltar",
+        paragraphs: [
+          "El punto central es la autorizacion por objeto. El servidor debe verificar que el usuario autenticado tenga permiso sobre ese PDF antes de entregarlo. Hacer el nombre menos predecible ayuda, pero no reemplaza la validacion de permisos."
+        ]
+      },
+      {
+        title: "Controles concretos",
+        bullets: [
+          "Descarga siempre mediada por la aplicacion, no por carpeta publica.",
+          "Autorizacion del lado servidor contra titularidad, rol o expediente.",
+          "Links firmados, temporales y de un solo uso cuando aplique.",
+          "Rate limiting y alertas por secuencias numericas o descargas masivas.",
+          "Logs de accesos permitidos y denegados para estimar alcance.",
+          "Revisiones de configuracion cloud y pruebas de seguridad recurrentes."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "UUIDs o nombres aleatorios reducen enumeracion, pero la defensa real es verificar permisos antes de entregar cada documento."
+      }
+    ]
+  },
+  {
+    id: "UA-10",
+    topic: "IA",
+    sourceGroup: "Casos agregados",
+    title: "Asistente interno con permisos corporativos amplios",
+    source: "Casos adjuntos por usuario, Caso 5",
+    status: "Revisado",
+    summary: "Un asistente de IA conectado a CRM, tickets, carpetas y reportes usa una cuenta tecnica global y revela datos que usuarios no deberian ver.",
+    prompt: {
+      context: [
+        "Una empresa incorpora un asistente interno de IA para consultar ventas, contratos, clientes y reclamos.",
+        "El asistente se conecta al CRM, tickets, carpetas compartidas y reportes financieros. Para simplificar, usa una cuenta tecnica con permisos amplios.",
+        "Los empleados no acceden directamente a todas las fuentes, pero pueden preguntar al asistente. Un vendedor obtiene clientes de otras regiones, reclamos confidenciales y datos financieros.",
+        "La empresa no registra claramente que documentos recupero el asistente ni que datos incluyo en cada respuesta."
+      ],
+      questions: [
+        "Identifique las principales amenazas de seguridad y privacidad.",
+        "Explique por que una cuenta tecnica amplia puede generar accesos indebidos.",
+        "Proponga controles tecnicos para que el asistente respete permisos reales.",
+        "Indique controles organizacionales de acompaniamiento.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: permisos excesivos, acceso indirecto a datos restringidos, fuga de datos de clientes/finanzas/reclamos, prompt injection, mezcla de contexto, errores del modelo y falta de trazabilidad.",
+          "La cuenta tecnica rompe autorizacion: el asistente recupera documentos con permisos globales y los muestra a usuarios que no podrian acceder por vias normales.",
+          "Controles tecnicos: autorizacion delegada por usuario, respeto de ACLs, RBAC/ABAC, minimo privilegio, filtros previos por fuente, DLP, logging de prompts/fuentes/respuestas, citas internas, separacion lectura/acciones y proteccion contra prompt injection.",
+          "Controles organizacionales: politica de uso de IA, clasificacion de informacion, aprobacion de fuentes conectadas, duenos de datos, revision periodica de permisos, capacitacion, auditorias y plan de incidentes.",
+          "CIA: confidencialidad es la principal; integridad por respuestas incorrectas o acciones indebidas; disponibilidad si se depende del asistente y falla."
+        ]
+      },
+      {
+        title: "Patron de falla",
+        paragraphs: [
+          "El asistente se convierte en una nueva capa de acceso. Aunque CRM, tickets y carpetas esten bien configurados, una cuenta global puede saltarse esos permisos y entregar informacion por una via indirecta."
+        ]
+      },
+      {
+        title: "Controles que deberian aparecer",
+        bullets: [
+          "Usar identidad del usuario real para consultar cada fuente.",
+          "Excluir documentos que el usuario no puede ver antes de enviarlos al modelo.",
+          "Registrar prompt, usuario, fuentes consultadas, fragmentos usados y respuesta.",
+          "DLP para bloquear datos sensibles en prompts o salidas no autorizadas.",
+          "Aprobacion adicional para acciones sensibles y separacion de lectura/escritura.",
+          "Pruebas abusivas: pedir datos de otra region, finanzas o clientes restringidos."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "No tratarlo como un buscador comun: si conecta sistemas internos, debe respetar el modelo de permisos de cada usuario."
+      }
+    ]
+  },
+  {
+    id: "UA-11",
+    topic: "Privacidad",
+    sourceGroup: "Casos agregados",
+    title: "Turnos medicos con kioscos de autogestion",
+    source: "Respuesta adjunta por usuario, Caso 6; consigna sintetizada",
+    status: "Revisado",
+    summary: "Kioscos fisicos para turnos medicos agregan riesgo de sesiones abiertas, exposicion visual, comprobantes abandonados y manipulacion del equipo.",
+    prompt: {
+      context: [
+        "Consigna sintetizada desde la respuesta adjunta: una institucion de salud usa kioscos de autogestion para consultar, confirmar o modificar turnos.",
+        "Los kioscos estan en espacios publicos, muestran datos personales o de turnos, pueden imprimir comprobantes y quedan fisicamente accesibles para pacientes, terceros y soporte.",
+        "Existe riesgo de sesiones abandonadas, exposicion visual, almacenamiento local y manipulacion del dispositivo."
+      ],
+      questions: [
+        "Identifique amenazas de seguridad y privacidad.",
+        "Proponga controles tecnicos y organizacionales.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: datos visibles en pantalla, sesiones abiertas, shoulder surfing, comprobantes con datos excesivos, acceso a turnos de terceros, manipulacion fisica, almacenamiento local inseguro y soporte sin control.",
+          "Controles tecnicos: cierre automatico, boton visible de logout, enmascaramiento de DNI/telefono, autenticacion proporcional, modo kiosco bloqueado, USB deshabilitado, no guardar datos localmente, cifrado, hardening, logs y control de impresion.",
+          "Controles organizacionales: ubicacion que reduzca exposicion visual, filtros de privacidad, capacitacion, mantenimiento autorizado, politica de datos mostrados/impresos, retiro de comprobantes abandonados y evaluacion del proveedor.",
+          "CIA: confidencialidad por datos personales/salud; integridad si se modifican turnos de terceros; disponibilidad si el kiosco cae o es bloqueado."
+        ]
+      },
+      {
+        title: "Diferencia frente a una web comun",
+        paragraphs: [
+          "El kiosco suma amenazas fisicas: personas mirando por encima del hombro, sesiones abandonadas, impresiones olvidadas, puertos accesibles y posibilidad de salir del modo aplicacion."
+        ]
+      },
+      {
+        type: "callout",
+        title: "Punto fino",
+        text: "El riesgo no esta solo en la app. Al estar en un espacio publico, importan privacidad visual, cierre de sesion y seguridad fisica del dispositivo."
+      }
+    ]
+  },
+  {
+    id: "UA-12",
+    topic: "Privacidad",
+    sourceGroup: "Casos agregados",
+    title: "Delivery farmaceutico con geolocalizacion",
+    source: "Respuesta adjunta por usuario, Caso 7; consigna sintetizada",
+    status: "Revisado",
+    summary: "Una app de farmacia puede revelar medicamentos, ubicacion, rutinas y datos de salud inferidos a soporte, repartidores o terceros.",
+    prompt: {
+      context: [
+        "Consigna sintetizada desde la respuesta adjunta: una app de delivery farmaceutico gestiona pedidos, direcciones, geolocalizacion, pagos y entregas.",
+        "El historial de productos y ubicaciones puede ser visto por farmacia, soporte, repartidores u operadores logisticos segun los permisos configurados.",
+        "Los pedidos pueden revelar informacion de salud aunque la app no registre diagnosticos explicitos."
+      ],
+      questions: [
+        "Identifique amenazas de seguridad y privacidad.",
+        "Explique por que los datos son sensibles.",
+        "Proponga controles tecnicos y organizacionales.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: exposicion de medicamentos, direccion, ubicacion y telefonos; inferencia de enfermedades; acceso indebido de repartidores o soporte; notificaciones explicitas; retencion excesiva; uso comercial secundario; errores de entrega.",
+          "Son datos sensibles porque medicamentos y geolocalizacion pueden revelar tratamientos psiquiatricos, embarazo, anticoncepcion, enfermedades cronicas, infecciosas u oncologicas, rutinas y visitas a centros medicos.",
+          "Controles tecnicos: minimizacion por rol, ocultamiento de contenido sensible, cifrado, logs, notificaciones discretas, retencion limitada, separacion de datos de pago/ubicacion/salud, alertas y validacion segura de entrega.",
+          "Controles organizacionales: politica de privacidad clara, capacitacion, acuerdos de confidencialidad, reglas de uso comercial, contratos con farmacias/logistica, procedimiento ante entrega incorrecta y auditorias.",
+          "CIA: confidencialidad es la principal; integridad si se altera pedido/direccion; disponibilidad si la app cae y retrasa entregas criticas."
+        ]
+      },
+      {
+        title: "Punto de privacidad",
+        paragraphs: [
+          "Aunque no exista un campo diagnostico, el historial farmaceutico puede equivaler a dato de salud por inferencia. El repartidor necesita entregar, no conocer todo el historial ni detalles medicos innecesarios."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "No alcanza decir 'no guardamos diagnosticos': los medicamentos comprados pueden revelar condiciones de salud."
+      }
+    ]
+  },
+  {
+    id: "UA-13",
+    topic: "Privacidad",
+    sourceGroup: "Casos agregados",
+    title: "Colegio con plataforma de conducta",
+    source: "Respuesta adjunta por usuario, Caso 8; consigna sintetizada",
+    status: "Revisado",
+    summary: "Una plataforma escolar registra conducta de menores; errores, comentarios excesivos o accesos indebidos pueden afectar reputacion y trayectoria educativa.",
+    prompt: {
+      context: [
+        "Consigna sintetizada desde la respuesta adjunta: un colegio usa una plataforma para registrar observaciones de conducta, desempeno, convivencia y seguimiento de alumnos.",
+        "Docentes, directivos y familias acceden a la plataforma segun roles. Los datos tratan sobre menores y pueden conservarse durante largo tiempo.",
+        "Existe riesgo de comentarios subjetivos, errores, accesos fuera de curso o uso futuro fuera de contexto."
+      ],
+      questions: [
+        "Identifique amenazas de seguridad y privacidad.",
+        "Explique el problema particular de datos sobre menores.",
+        "Proponga controles tecnicos y organizacionales.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: exposicion de datos de menores, padres viendo datos ajenos, docentes accediendo a cursos no asignados, comentarios subjetivos/excesivos, retencion indefinida, errores no corregidos y falta de trazabilidad.",
+          "Los datos sobre menores requieren proteccion reforzada porque pueden afectar reputacion, trato institucional y trayectoria educativa.",
+          "Controles tecnicos: RBAC por curso/division, MFA, cifrado, logs de lectura/edicion, historial de cambios, permisos para observaciones sensibles, bloqueo de exportaciones, alertas por accesos masivos y retencion limitada.",
+          "Controles organizacionales: reglas sobre que registrar y con que lenguaje, derecho de correccion, informacion a familias, auditoria, limites de conservacion y capacitacion docente.",
+          "CIA: confidencialidad por datos de menores; integridad por registros falsos o no corregidos; disponibilidad si el sistema impide seguimiento escolar."
+        ]
+      },
+      {
+        title: "Riesgo no solo tecnico",
+        paragraphs: [
+          "Un sistema puede estar bien protegido y aun asi ser problematico si permite cargar observaciones desproporcionadas, ambiguas o permanentes. La calidad y finalidad del dato tambien importan."
+        ]
+      },
+      {
+        type: "callout",
+        title: "Punto fino",
+        text: "Con menores, privacidad e integridad se cruzan: un dato incorrecto o injusto puede producir dano aunque nunca se filtre."
+      }
+    ]
+  },
+  {
+    id: "UA-14",
+    topic: "IA",
+    sourceGroup: "Casos agregados",
+    title: "Chatbot publico conectado a conocimiento interno",
+    source: "Respuesta adjunta por usuario, Caso 9; consigna sintetizada",
+    status: "Revisado",
+    summary: "Un chatbot publico conectado a bases internas puede filtrar documentos, contratos o datos de clientes mediante consultas o prompt injection.",
+    prompt: {
+      context: [
+        "Consigna sintetizada desde la respuesta adjunta: una empresa publica un chatbot para clientes y lo conecta a una base de conocimiento interna.",
+        "La base puede incluir documentos que no fueron aprobados para publico, informacion de clientes, politicas internas, contratos o precios.",
+        "Usuarios externos podrian intentar extraer informacion mediante consultas insistentes o prompt injection."
+      ],
+      questions: [
+        "Identifique amenazas de seguridad y privacidad.",
+        "Proponga controles tecnicos y organizacionales.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: indexar documentos internos por error, exposicion de clientes/contratos/precios/estrategias, prompt injection, extraccion de datos, respuestas inventadas y retencion de conversaciones con datos personales.",
+          "Controles tecnicos: separar base publica e interna, clasificar documentos antes de indexar, DLP, filtros de autorizacion, pruebas de prompt injection, limites de respuesta, logs, alertas por consultas sospechosas y revision periodica del indice.",
+          "Controles organizacionales: proceso de aprobacion de contenido publico, duenos por fuente, clasificacion de informacion, revision legal/seguridad, capacitacion y procedimiento de baja urgente.",
+          "CIA: confidencialidad es la principal; integridad por respuestas incorrectas o manipuladas; disponibilidad si el chatbot debe apagarse por incidente."
+        ]
+      },
+      {
+        title: "Riesgo principal",
+        paragraphs: [
+          "El chatbot es una superficie publica. Si su indice mezcla fuentes internas y publicas, una pregunta externa puede convertirse en un canal de fuga."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "No alcanza con decir que el bot 'solo responde preguntas'. Si ve documentos internos, puede exponerlos."
+      }
+    ]
+  },
+  {
+    id: "UA-15",
+    topic: "IAM",
+    sourceGroup: "Casos agregados",
+    title: "Control de acceso fisico con reconocimiento facial",
+    source: "Respuesta adjunta por usuario, Caso 10; consigna sintetizada",
+    status: "Revisado",
+    summary: "Un sistema de ingreso con reconocimiento facial usa biometria dificil de cambiar, con riesgos de filtracion, sesgo, falsos positivos y vigilancia laboral.",
+    prompt: {
+      context: [
+        "Consigna sintetizada desde la respuesta adjunta: una organizacion usa reconocimiento facial para controlar el acceso fisico de empleados o visitantes.",
+        "El sistema registra rostros o plantillas biometricas, decide ingresos permitidos/denegados y puede depender de un proveedor externo.",
+        "Existen riesgos de falsos positivos, falsos negativos, suplantacion, vigilancia laboral y falta de alternativa no biometrica."
+      ],
+      questions: [
+        "Identifique amenazas de seguridad y privacidad.",
+        "Explique por que la biometria es especialmente delicada.",
+        "Proponga controles tecnicos y organizacionales.",
+        "Explique que parte de la triada CIA podria verse afectada."
+      ]
+    },
+    sections: [
+      {
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: filtracion de plantillas biometricas, uso secundario de rostros, suplantacion con foto/video/mascara, falso positivo, falso negativo, vigilancia laboral excesiva, sesgos, dependencia de proveedor y falta de alternativa.",
+          "La biometria es delicada porque no se cambia como una contrasena; si se filtra una plantilla facial, el impacto puede ser persistente.",
+          "Controles tecnicos: plantillas protegidas, cifrado, procesamiento local, deteccion de vida, pruebas anti-spoofing, logs, revision de falsos positivos/negativos, MFA o metodo alternativo, segmentacion, retencion limitada y borrado al egreso.",
+          "Controles organizacionales: finalidad precisa, evaluacion de proporcionalidad, alternativa no biometrica, informacion clara, contrato con proveedor, prohibicion de usos secundarios, auditorias y reclamos ante errores.",
+          "CIA: confidencialidad por biometria y registros de movimiento; integridad por decisiones incorrectas de acceso; disponibilidad si el sistema bloquea ingresos legitimos."
+        ]
+      },
+      {
+        title: "Como defender el analisis",
+        paragraphs: [
+          "La comodidad no vuelve proporcional al reconocimiento facial. Antes de implementarlo hay que justificar por que no alcanzan tarjetas, credenciales, PIN o MFA tradicional, y asegurar una alternativa para quien no pueda o no quiera usar biometria."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Punto fino",
+        text: "Una contrasena se rota; una cara no. Ese es el argumento fuerte para tratar la biometria con controles reforzados."
+      }
+    ]
   }
 ];
 
