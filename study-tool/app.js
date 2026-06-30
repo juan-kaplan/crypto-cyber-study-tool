@@ -1,5 +1,112 @@
 const cases = [
   {
+    id: "GX-00",
+    topic: "Transversal",
+    sourceGroup: "Guia de respuesta",
+    title: "Checklist comun para cualquier caso",
+    source: "Guia general adjunta por usuario, revisada y condensada",
+    status: "Revisado",
+    sourceLabel: "Guia transversal",
+    sourceTitle: "Uso antes de responder",
+    summary: "Bloques que conviene revisar en casi todos los casos sin caer en una lista generica de controles.",
+    prompt: {
+      context: [
+        "Usar esta guia antes de escribir la respuesta final. No obliga a mencionar todos los controles: sirve para detectar que piezas faltan y justificar cada una contra el caso concreto.",
+        "La respuesta fuerte no enumera herramientas sueltas. Explica que riesgo reducen, que parte de CIA protegen y que evidencia permitiria comprobar el alcance."
+      ],
+      questions: [
+        "Cual es el activo principal y que proceso depende de el?",
+        "Que amenaza explota que vulnerabilidad y que riesgo produce?",
+        "Que controles preventivos, detectivos y correctivos son defendibles para este caso?",
+        "Hay datos sensibles, proveedores, IA, nube, cuentas compartidas o aplicaciones expuestas?",
+        "Que punto fino evita una respuesta generica?"
+      ]
+    },
+    sections: [
+      {
+        title: "Bloques que casi siempre suman",
+        matrix: [
+          ["Activo", "Nombrar el dato, sistema, identidad o proceso que se protege. El activo no suele ser solo el servidor: tambien puede ser continuidad, reputacion, decision o confianza."],
+          ["Amenaza, vulnerabilidad y riesgo", "Separar quien causa dano, que debilidad lo permite y que impacto puede ocurrir. Evita mezclar 'base expuesta' con 'fuga de datos'."],
+          ["CIA", "Indicar si el caso afecta confidencialidad, integridad, disponibilidad o mas de una a la vez, explicando el motivo."],
+          ["Controles por funcion", "Ordenar medidas como preventivas, detectivas y correctivas. Una buena respuesta no se queda solo en prevenir."],
+          ["Evidencia", "Decir que logs, auditorias o registros permitirian reconstruir quien hizo que, cuando, desde donde y sobre que recurso."],
+          ["Limites del control", "Aclarar que MFA, VPN, cifrado o backups ayudan, pero no reemplazan autorizacion, minimo privilegio, monitoreo ni respuesta."]
+        ]
+      },
+      {
+        title: "Controles transversales a revisar",
+        bullets: [
+          "MFA para cuentas administrativas, accesos remotos, proveedores, correo, consolas cloud y sistemas con datos sensibles.",
+          "Cuentas nominales, no compartidas, con baja inmediata, revocacion de sesiones y revision periodica de accesos.",
+          "Minimo privilegio y necesidad de saber para usuarios, servicios, APIs, proveedores, cuentas tecnicas y asistentes de IA.",
+          "Autorizacion por recurso: cada documento, turno, nota, factura, cliente, historia clinica o ID debe validarse del lado servidor.",
+          "Logs utiles y alertas: no solo login exitoso, sino lectura, descarga, modificacion, exportacion, denegaciones, cambios de permisos y acciones administrativas.",
+          "Segmentacion para limitar movimiento lateral entre usuarios, servidores, bases, backups, IoT, produccion y redes de proveedores.",
+          "Backups aislados o inmutables, cifrados, versionados y probados con restauraciones reales.",
+          "Cifrado en transito y en reposo con gestion segura de claves, entendiendo que no corrige permisos excesivos.",
+          "Respuesta a incidentes: contener, preservar evidencia, identificar alcance, erradicar causa, recuperar y aprender."
+        ]
+      },
+      {
+        title: "Datos personales y sensibles",
+        bullets: [
+          "Identificar si hay salud, menores, biometria, finanzas, ubicacion, conducta escolar, medicamentos o datos que permitan inferir informacion sensible.",
+          "Aplicar minimizacion: si un dato no es necesario para la finalidad, agrega riesgo innecesario.",
+          "Definir finalidad, retencion, acceso, borrado, transparencia y base legal o consentimiento cuando corresponda.",
+          "Usar DLP, redaccion, anonimizacion o pseudonimizacion cuando reduzcan exposicion sin romper el objetivo del proceso.",
+          "Recordar que anonimizar no elimina todo el riesgo si el contexto permite reidentificar."
+        ]
+      },
+      {
+        title: "Si aparece este patron",
+        matrix: [
+          ["Proveedor", "Revisar datos compartidos, subprocesadores, retencion, ubicacion, contrato, auditoria, cuentas nominales, MFA, acceso temporal y logs."],
+          ["IA", "Revisar prompts, datos sensibles, no-training/no-retention, aislamiento de contexto, autorizacion en retrieval, prompt injection, DLP, trazabilidad y revision humana."],
+          ["Nube", "Buscar recursos publicos, IAM amplio, claves expuestas, logs desactivados, security groups permisivos, backups en el mismo entorno y falta de IaC/CSPM."],
+          ["Web/API", "Validar AuthN, AuthZ por objeto, tokens, errores genericos, rate limiting, exposicion excesiva, logs y pruebas negativas de IDOR/BOLA."],
+          ["Ransomware", "Cubrir entrada inicial, movimiento lateral, privilegios, EDR, segmentacion, exfiltracion, backups probados y plan de respuesta."],
+          ["Cuenta compartida", "Marcar perdida de trazabilidad, imposibilidad de revocar a una persona, MFA individual imposible y abuso interno dificil de investigar."]
+        ]
+      },
+      {
+        title: "Formula de respuesta",
+        ordered: [
+          "Activo: que se protege y por que importa para la organizacion o la persona.",
+          "Amenaza: quien o que podria causar el dano.",
+          "Vulnerabilidad: que debilidad concreta permite el abuso.",
+          "Riesgo: que impacto real produce si se explota.",
+          "CIA: que propiedad se afecta y con que evidencia del caso.",
+          "Preventivos: que controles reducen la probabilidad.",
+          "Detectivos: que eventos deben registrarse o alertar.",
+          "Correctivos: como contener, recuperar y evitar recurrencia.",
+          "Privacidad o terceros: agregarlo si hay datos personales, IA, proveedor, nube o subprocesadores.",
+          "Evidencia: que registros hacen posible investigar alcance y atribucion.",
+          "Punto fino: aclarar el limite de una solucion obvia para demostrar criterio."
+        ]
+      },
+      {
+        title: "Frases comodin defendibles",
+        bullets: [
+          "MFA mejora la autenticacion, pero no reemplaza autorizacion granular, trazabilidad ni minimo privilegio.",
+          "La VPN protege el canal, pero no resuelve identidad individual, permisos, monitoreo ni abuso de privilegios.",
+          "El backend debe desconfiar de cualquier ID, parametro o token enviado por el cliente.",
+          "Un log util no solo dice que alguien entro; dice que hizo despues de entrar.",
+          "El backup no se valida cuando se crea; se valida cuando se restaura.",
+          "Tercerizar una funcion no elimina la responsabilidad sobre los datos ni sobre el riesgo.",
+          "La seguridad de una API no se basa en ocultar IDs, sino en verificar permisos en cada operacion.",
+          "No existe un unico control que resuelva todo: hay que prevenir, detectar, responder y recuperar."
+        ]
+      },
+      {
+        type: "callout",
+        tone: "warning",
+        title: "Como no usar esta guia",
+        text: "No pegues todos los controles en todos los casos. Elegi los que el escenario justifica y explica que riesgo reducen; si no, la respuesta parece memorizada."
+      }
+    ]
+  },
+  {
     id: "EP-01",
     topic: "IAM",
     sourceGroup: "Escenarios de repaso",
@@ -1401,41 +1508,89 @@ const cases = [
     topic: "Privacidad",
     sourceGroup: "Casos agregados",
     title: "Turnos medicos con kioscos de autogestion",
-    source: "Respuesta adjunta por usuario, Caso 6; consigna sintetizada",
+    source: "Respuesta adjunta por usuario, Caso 6; consigna reconstruida",
     status: "Revisado",
     summary: "Kioscos fisicos para turnos medicos agregan riesgo de sesiones abiertas, exposicion visual, comprobantes abandonados y manipulacion del equipo.",
     prompt: {
       context: [
-        "Consigna sintetizada desde la respuesta adjunta: una institucion de salud usa kioscos de autogestion para consultar, confirmar o modificar turnos.",
-        "Los kioscos estan en espacios publicos, muestran datos personales o de turnos, pueden imprimir comprobantes y quedan fisicamente accesibles para pacientes, terceros y soporte.",
-        "Existe riesgo de sesiones abandonadas, exposicion visual, almacenamiento local y manipulacion del dispositivo."
+        "Una institucion de salud instala kioscos de autogestion en la recepcion para que pacientes consulten, confirmen, cancelen o modifiquen turnos.",
+        "Para identificarse, el paciente ingresa DNI y fecha de nacimiento. La pantalla muestra nombre, obra social, especialidad, profesional, sede y horarios disponibles. El kiosco tambien puede imprimir comprobantes.",
+        "Los equipos estan en un hall publico. Algunos pacientes abandonan la sesion abierta, quedan comprobantes en la bandeja y otras personas pueden mirar la pantalla desde la fila.",
+        "El proveedor de mantenimiento tiene acceso fisico periodico a los kioscos. No esta claro si el equipo guarda datos localmente, si hay modo kiosco bloqueado ni que logs registra."
       ],
       questions: [
-        "Identifique amenazas de seguridad y privacidad.",
-        "Proponga controles tecnicos y organizacionales.",
+        "Identifique amenazas de seguridad y privacidad propias de este escenario fisico.",
+        "Explique por que el kiosco no debe analizarse igual que una web privada usada desde el hogar.",
+        "Proponga controles tecnicos y organizacionales para reducir el riesgo.",
+        "Indique que evidencias deberia conservar el sistema para investigar accesos o cambios indebidos.",
         "Explique que parte de la triada CIA podria verse afectada."
       ]
     },
     sections: [
       {
-        title: "Respuesta por consigna",
-        ordered: [
-          "Amenazas: datos visibles en pantalla, sesiones abiertas, shoulder surfing, comprobantes con datos excesivos, acceso a turnos de terceros, manipulacion fisica, almacenamiento local inseguro y soporte sin control.",
-          "Controles tecnicos: cierre automatico, boton visible de logout, enmascaramiento de DNI/telefono, autenticacion proporcional, modo kiosco bloqueado, USB deshabilitado, no guardar datos localmente, cifrado, hardening, logs y control de impresion.",
-          "Controles organizacionales: ubicacion que reduzca exposicion visual, filtros de privacidad, capacitacion, mantenimiento autorizado, politica de datos mostrados/impresos, retiro de comprobantes abandonados y evaluacion del proveedor.",
-          "CIA: confidencialidad por datos personales/salud; integridad si se modifican turnos de terceros; disponibilidad si el kiosco cae o es bloqueado."
+        title: "Lectura del caso",
+        paragraphs: [
+          "El activo no es solo el turno. Tambien son los datos de salud inferidos por la especialidad, la identidad del paciente, el comprobante impreso y la confianza en que nadie puede modificar turnos ajenos desde un equipo publico.",
+          "La diferencia central frente a un portal web comun es el entorno fisico: pantalla visible, sesiones abandonadas, impresiones olvidadas, puertos accesibles y mantenimiento por terceros."
         ]
       },
       {
-        title: "Diferencia frente a una web comun",
-        paragraphs: [
-          "El kiosco suma amenazas fisicas: personas mirando por encima del hombro, sesiones abandonadas, impresiones olvidadas, puertos accesibles y posibilidad de salir del modo aplicacion."
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: shoulder surfing, sesiones abiertas, comprobantes abandonados, acceso a turnos de terceros, modificacion no autorizada, manipulacion fisica del equipo, malware por puertos expuestos y soporte/proveedor sin trazabilidad.",
+          "Privacidad: especialidad, profesional, obra social, sede y horario pueden revelar datos de salud o rutinas aunque el sistema no muestre diagnosticos.",
+          "Controles tecnicos: cierre automatico, boton visible de logout, pantalla de privacidad, enmascaramiento de datos, autenticacion proporcional, modo kiosco, bloqueo de USB, no guardar datos localmente, cifrado, hardening y logs por accion.",
+          "Controles organizacionales: ubicacion que reduzca exposicion visual, retiro de comprobantes, carteleria clara, mantenimiento autorizado, contrato con proveedor, politica de datos impresos y revisiones periodicas.",
+          "Evidencias: usuario/paciente autenticado, kiosco, accion realizada, turno afectado, hora, resultado, cambios before/after, errores de autenticacion y usuario tecnico si hubo mantenimiento.",
+          "CIA: confidencialidad es principal; integridad si cambian turnos; disponibilidad si el kiosco queda inutilizado o impide operar recepcion."
+        ]
+      },
+      {
+        title: "Amenazas concretas",
+        bullets: [
+          "Un tercero usa una sesion abandonada para ver o cancelar turnos.",
+          "Alguien observa DNI, especialidad o profesional desde la fila.",
+          "Un comprobante impreso queda en la bandeja y revela datos personales o de salud inferidos.",
+          "Una persona manipula teclado, puertos, navegador o sistema operativo si no existe modo kiosco.",
+          "Un tecnico de soporte accede sin cuenta nominal ni registro detallado.",
+          "El equipo almacena cache, documentos o logs locales sin cifrado."
+        ]
+      },
+      {
+        title: "Controles tecnicos",
+        bullets: [
+          "Timeout corto por inactividad y cierre de sesion al finalizar cualquier operacion.",
+          "Minimizar pantalla e impresion: mostrar solo lo necesario y ocultar DNI, telefono o detalles sensibles.",
+          "Modo kiosco bloqueado, allowlisting de aplicaciones, USB deshabilitado y disco cifrado.",
+          "No guardar documentos, capturas ni datos de pacientes localmente salvo necesidad justificada.",
+          "Autenticacion proporcional: no usar solo DNI si la accion permite modificar o cancelar turnos sensibles.",
+          "Registro de lectura, modificacion, cancelacion, impresion y errores de autenticacion."
+        ]
+      },
+      {
+        title: "Controles organizacionales",
+        bullets: [
+          "Ubicar kioscos para evitar que la fila vea la pantalla; usar filtros de privacidad si hace falta.",
+          "Definir que datos pueden mostrarse e imprimirse y cuanto detalle debe contener el comprobante.",
+          "Retirar comprobantes abandonados y capacitar a recepcion para detectar sesiones abiertas.",
+          "Autorizar mantenimiento con ticket, cuenta nominal y ventana horaria.",
+          "Evaluar al proveedor: acceso fisico, hardening, actualizaciones, borrado seguro y notificacion de incidentes."
+        ]
+      },
+      {
+        title: "CIA y NIST",
+        bullets: [
+          "Confidencialidad: datos personales, obra social, especialidad y turnos quedan visibles o impresos.",
+          "Integridad: un tercero podria modificar o cancelar turnos de otra persona.",
+          "Disponibilidad: un kiosco bloqueado o manipulado puede afectar recepcion y atencion.",
+          "NIST: Identify por inventario y datos mostrados; Protect por hardening y minimizacion; Detect por logs; Respond por bloqueo/revision; Recover por restaurar imagen limpia."
         ]
       },
       {
         type: "callout",
+        tone: "warning",
         title: "Punto fino",
-        text: "El riesgo no esta solo en la app. Al estar en un espacio publico, importan privacidad visual, cierre de sesion y seguridad fisica del dispositivo."
+        text: "No alcanza con decir 'poner login'. En un kiosco publico, privacidad visual, sesion, impresion y seguridad fisica son parte del riesgo."
       }
     ]
   },
@@ -1444,44 +1599,87 @@ const cases = [
     topic: "Privacidad",
     sourceGroup: "Casos agregados",
     title: "Delivery farmaceutico con geolocalizacion",
-    source: "Respuesta adjunta por usuario, Caso 7; consigna sintetizada",
+    source: "Respuesta adjunta por usuario, Caso 7; consigna reconstruida",
     status: "Revisado",
     summary: "Una app de farmacia puede revelar medicamentos, ubicacion, rutinas y datos de salud inferidos a soporte, repartidores o terceros.",
     prompt: {
       context: [
-        "Consigna sintetizada desde la respuesta adjunta: una app de delivery farmaceutico gestiona pedidos, direcciones, geolocalizacion, pagos y entregas.",
-        "El historial de productos y ubicaciones puede ser visto por farmacia, soporte, repartidores u operadores logisticos segun los permisos configurados.",
-        "Los pedidos pueden revelar informacion de salud aunque la app no registre diagnosticos explicitos."
+        "Una cadena de farmacias lanza una app de delivery. Los usuarios cargan recetas, compran medicamentos, pagan desde la app y comparten direccion y geolocalizacion para coordinar la entrega.",
+        "Farmacia, soporte, repartidores y un operador logistico externo acceden a distintas pantallas del pedido. En la practica, algunos perfiles pueden ver historial de compras, telefono, direccion exacta y detalle del producto.",
+        "Las notificaciones muestran el nombre del medicamento en la pantalla bloqueada. La empresa tambien analiza historiales para promociones y no definio claramente cuanto tiempo conserva ubicaciones y recetas.",
+        "Un error de entrega envia un pedido a otro domicilio y soporte consulta historiales completos para resolver reclamos."
       ],
       questions: [
         "Identifique amenazas de seguridad y privacidad.",
-        "Explique por que los datos son sensibles.",
-        "Proponga controles tecnicos y organizacionales.",
+        "Explique por que los medicamentos, recetas y ubicacion pueden ser datos sensibles aunque no haya un diagnostico explicito.",
+        "Proponga controles tecnicos y organizacionales, diferenciando que necesita ver farmacia, soporte y repartidor.",
+        "Indique que evidencias y alertas deberia conservar la plataforma.",
         "Explique que parte de la triada CIA podria verse afectada."
       ]
     },
     sections: [
       {
-        title: "Respuesta por consigna",
-        ordered: [
-          "Amenazas: exposicion de medicamentos, direccion, ubicacion y telefonos; inferencia de enfermedades; acceso indebido de repartidores o soporte; notificaciones explicitas; retencion excesiva; uso comercial secundario; errores de entrega.",
-          "Son datos sensibles porque medicamentos y geolocalizacion pueden revelar tratamientos psiquiatricos, embarazo, anticoncepcion, enfermedades cronicas, infecciosas u oncologicas, rutinas y visitas a centros medicos.",
-          "Controles tecnicos: minimizacion por rol, ocultamiento de contenido sensible, cifrado, logs, notificaciones discretas, retencion limitada, separacion de datos de pago/ubicacion/salud, alertas y validacion segura de entrega.",
-          "Controles organizacionales: politica de privacidad clara, capacitacion, acuerdos de confidencialidad, reglas de uso comercial, contratos con farmacias/logistica, procedimiento ante entrega incorrecta y auditorias.",
-          "CIA: confidencialidad es la principal; integridad si se altera pedido/direccion; disponibilidad si la app cae y retrasa entregas criticas."
+        title: "Lectura del caso",
+        paragraphs: [
+          "El dato sensible aparece por inferencia. Una compra puede revelar embarazo, anticoncepcion, salud mental, enfermedades cronicas, infecciones, tratamientos oncologicos o rutinas de una persona.",
+          "El repartidor necesita entregar el paquete, no conocer el historial farmaceutico. Soporte necesita resolver un reclamo, no navegar compras antiguas sin justificacion."
         ]
       },
       {
-        title: "Punto de privacidad",
-        paragraphs: [
-          "Aunque no exista un campo diagnostico, el historial farmaceutico puede equivaler a dato de salud por inferencia. El repartidor necesita entregar, no conocer todo el historial ni detalles medicos innecesarios."
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: exposicion de medicamentos, recetas, direccion y ubicacion; inferencia de enfermedades; accesos indebidos de soporte/repartidores; notificaciones indiscretas; retencion excesiva; uso comercial secundario y entrega a persona equivocada.",
+          "Sensibilidad: no hace falta guardar diagnostico para tratar datos de salud; producto, receta, farmacia, domicilio y frecuencia de compra pueden revelar informacion intima.",
+          "Minimizacion por rol: farmacia ve receta y producto; repartidor ve direccion, contacto minimo y confirmacion; soporte ve solo lo necesario para el ticket; marketing no debe usar datos sensibles sin base valida.",
+          "Controles tecnicos: RBAC/ABAC, MFA para perfiles internos, cifrado, logs de lectura, notificaciones discretas, token de entrega, retencion limitada, DLP y alertas por consultas masivas o fuera de rol.",
+          "Controles organizacionales: politica de privacidad clara, capacitacion, contrato con logistica, prohibicion de usos secundarios no informados, procedimiento de entrega incorrecta y auditorias.",
+          "CIA: confidencialidad es principal; integridad si se altera receta, pedido o direccion; disponibilidad si la app cae y retrasa medicamentos criticos."
+        ]
+      },
+      {
+        title: "Riesgos por actor",
+        matrix: [
+          ["Farmacia", "Debe validar receta y preparar pedido, pero no usar historiales completos para fines no vinculados sin justificacion."],
+          ["Repartidor", "Necesita direccion y contacto operativo; no necesita diagnostico, receta completa ni historial del cliente."],
+          ["Soporte", "Debe acceder por ticket y con motivo; historiales completos sin justificacion elevan riesgo de curiosidad o abuso interno."],
+          ["Operador logistico", "Amplia la cadena de riesgo: contrato, subprocesadores, retencion, acceso nominal y notificacion de incidentes son claves."],
+          ["Marketing", "El uso promocional de compras de medicamentos puede ser especialmente riesgoso por inferencias de salud."]
+        ]
+      },
+      {
+        title: "Controles tecnicos",
+        bullets: [
+          "Separar datos de salud, pago, identidad, ubicacion y logistica con permisos distintos.",
+          "Enmascarar producto en notificaciones y etiquetas externas salvo necesidad operativa.",
+          "Token, PIN o QR de entrega para reducir errores de destinatario.",
+          "Logs de lectura de receta, historial, direccion y cambios de estado del pedido.",
+          "Alertas por consulta masiva, acceso fuera de horario, soporte sin ticket o repartidor mirando pedidos no asignados.",
+          "Retencion limitada de ubicacion en tiempo real, recetas y comprobantes."
+        ]
+      },
+      {
+        title: "Respuesta ante entrega incorrecta",
+        ordered: [
+          "Contener: bloquear acceso al pedido y contactar al destinatario incorrecto sin divulgar mas informacion.",
+          "Preservar evidencia: pedido, usuario, repartidor, geolocalizacion, validacion de entrega y logs de soporte.",
+          "Evaluar alcance: que datos vio el tercero y si hubo receta, medicamento o domicilio expuesto.",
+          "Corregir causa: validacion de identidad, flujo de entrega, capacitacion y alertas.",
+          "Notificar si corresponde segun sensibilidad y alcance."
+        ]
+      },
+      {
+        title: "CIA",
+        bullets: [
+          "Confidencialidad: medicamentos, recetas, ubicacion y domicilio revelan informacion de salud y rutina.",
+          "Integridad: pedido, receta, direccion o estado de entrega incorrectos pueden afectar tratamiento.",
+          "Disponibilidad: una caida puede demorar medicacion urgente o continuidad de tratamiento."
         ]
       },
       {
         type: "callout",
         tone: "warning",
         title: "Punto fino",
-        text: "No alcanza decir 'no guardamos diagnosticos': los medicamentos comprados pueden revelar condiciones de salud."
+        text: "No alcanza decir 'no guardamos diagnosticos'. En farmacia, el producto comprado puede ser el dato sensible."
       }
     ]
   },
@@ -1490,41 +1688,87 @@ const cases = [
     topic: "Privacidad",
     sourceGroup: "Casos agregados",
     title: "Colegio con plataforma de conducta",
-    source: "Respuesta adjunta por usuario, Caso 8; consigna sintetizada",
+    source: "Respuesta adjunta por usuario, Caso 8; consigna reconstruida",
     status: "Revisado",
     summary: "Una plataforma escolar registra conducta de menores; errores, comentarios excesivos o accesos indebidos pueden afectar reputacion y trayectoria educativa.",
     prompt: {
       context: [
-        "Consigna sintetizada desde la respuesta adjunta: un colegio usa una plataforma para registrar observaciones de conducta, desempeno, convivencia y seguimiento de alumnos.",
-        "Docentes, directivos y familias acceden a la plataforma segun roles. Los datos tratan sobre menores y pueden conservarse durante largo tiempo.",
-        "Existe riesgo de comentarios subjetivos, errores, accesos fuera de curso o uso futuro fuera de contexto."
+        "Un colegio implementa una plataforma para registrar observaciones de conducta, convivencia, sanciones, desempeno, informes de orientacion y comunicacion con familias.",
+        "Docentes cargan comentarios libres. Directivos y preceptores pueden ver varios cursos; las familias acceden al perfil de sus hijos. Algunos registros quedan visibles por anos y pueden exportarse en PDF.",
+        "Durante una revision, una familia ve por error una observacion de otro alumno. Tambien aparecen comentarios subjetivos o excesivos, como conflictos familiares o sospechas no verificadas.",
+        "No hay una politica clara sobre que se puede escribir, cuanto tiempo se conserva ni como corregir registros equivocados."
       ],
       questions: [
-        "Identifique amenazas de seguridad y privacidad.",
-        "Explique el problema particular de datos sobre menores.",
+        "Identifique amenazas de seguridad, privacidad e integridad de datos.",
+        "Explique por que los datos sobre menores requieren proteccion reforzada.",
         "Proponga controles tecnicos y organizacionales.",
+        "Indique que evidencias deberia registrar la plataforma para investigar accesos o cambios.",
         "Explique que parte de la triada CIA podria verse afectada."
       ]
     },
     sections: [
       {
-        title: "Respuesta por consigna",
-        ordered: [
-          "Amenazas: exposicion de datos de menores, padres viendo datos ajenos, docentes accediendo a cursos no asignados, comentarios subjetivos/excesivos, retencion indefinida, errores no corregidos y falta de trazabilidad.",
-          "Los datos sobre menores requieren proteccion reforzada porque pueden afectar reputacion, trato institucional y trayectoria educativa.",
-          "Controles tecnicos: RBAC por curso/division, MFA, cifrado, logs de lectura/edicion, historial de cambios, permisos para observaciones sensibles, bloqueo de exportaciones, alertas por accesos masivos y retencion limitada.",
-          "Controles organizacionales: reglas sobre que registrar y con que lenguaje, derecho de correccion, informacion a familias, auditoria, limites de conservacion y capacitacion docente.",
-          "CIA: confidencialidad por datos de menores; integridad por registros falsos o no corregidos; disponibilidad si el sistema impide seguimiento escolar."
+        title: "Lectura del caso",
+        paragraphs: [
+          "El problema no es solo que alguien pueda ver datos ajenos. Tambien importa que se registran datos sobre menores, con lenguaje subjetivo, posible permanencia larga y efectos reales sobre trato escolar, reputacion y trayectoria educativa.",
+          "La integridad pesa tanto como la confidencialidad: un comentario falso, exagerado o fuera de contexto puede causar dano aunque nunca se filtre fuera del colegio."
         ]
       },
       {
-        title: "Riesgo no solo tecnico",
-        paragraphs: [
-          "Un sistema puede estar bien protegido y aun asi ser problematico si permite cargar observaciones desproporcionadas, ambiguas o permanentes. La calidad y finalidad del dato tambien importan."
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: padres viendo datos de otros alumnos, docentes accediendo fuera de curso, comentarios excesivos o discriminatorios, registros falsos/no corregidos, exportaciones sin control, retencion indefinida y falta de trazabilidad.",
+          "Menores: requieren proteccion reforzada porque tienen menor control sobre sus datos y los registros pueden afectar reputacion, vinculos, decisiones institucionales y trayectoria futura.",
+          "Controles tecnicos: RBAC por curso/division/rol, MFA para perfiles administrativos, autorizacion por alumno, logs de lectura/edicion/exportacion, historial de cambios, cifrado, alertas y retencion limitada.",
+          "Controles organizacionales: guia de redaccion, prohibicion de datos excesivos, proceso de correccion, informacion a familias, responsables por dato, revision periodica y capacitacion docente.",
+          "Evidencias: quien vio o edito cada registro, alumno afectado, curso, cambio before/after, motivo, exportaciones, accesos denegados y alertas por consultas masivas.",
+          "CIA: confidencialidad por datos de menores; integridad por registros incorrectos o injustos; disponibilidad si el sistema impide seguimiento o comunicaciones urgentes."
+        ]
+      },
+      {
+        title: "Problemas concretos",
+        bullets: [
+          "BOLA/IDOR si una familia cambia un parametro y accede a otro alumno.",
+          "Permisos demasiado amplios si un docente ve cursos que no dicta.",
+          "Comentarios libres sin guia que registran opiniones, sospechas o datos familiares innecesarios.",
+          "Retencion excesiva que arrastra episodios viejos fuera de contexto.",
+          "Exportaciones PDF o capturas que salen del control de la plataforma.",
+          "Falta de mecanismo claro para corregir datos falsos o incompletos."
+        ]
+      },
+      {
+        title: "Controles tecnicos",
+        bullets: [
+          "Autorizacion server-side por alumno, curso y rol en cada lectura, edicion y exportacion.",
+          "Separar observaciones comunes de registros sensibles de orientacion o convivencia.",
+          "Historial de cambios con valor anterior, valor nuevo, usuario, fecha y motivo.",
+          "Bloqueo o aprobacion adicional para exportaciones masivas.",
+          "Alertas por docente consultando muchos alumnos fuera de su curso o familia con accesos denegados repetidos.",
+          "Retencion y archivado por ciclo escolar con reglas claras de acceso posterior."
+        ]
+      },
+      {
+        title: "Controles organizacionales",
+        bullets: [
+          "Politica sobre que se puede registrar, con lenguaje factual y proporcional.",
+          "Capacitacion a docentes y directivos sobre privacidad de menores.",
+          "Circuito de correccion o impugnacion de registros equivocados.",
+          "Informacion clara a familias sobre finalidad, accesos, retencion y derechos.",
+          "Auditoria periodica de permisos y muestreo de observaciones sensibles."
+        ]
+      },
+      {
+        title: "CIA y punto de privacidad",
+        bullets: [
+          "Confidencialidad: se exponen conducta, desempeno, convivencia y datos familiares de menores.",
+          "Integridad: un registro falso o desproporcionado puede afectar decisiones escolares.",
+          "Disponibilidad: si la plataforma falla, puede bloquear comunicaciones o seguimiento de situaciones criticas.",
+          "La calidad del dato es parte del riesgo: no todo dano nace de una filtracion."
         ]
       },
       {
         type: "callout",
+        tone: "warning",
         title: "Punto fino",
         text: "Con menores, privacidad e integridad se cruzan: un dato incorrecto o injusto puede producir dano aunque nunca se filtre."
       }
@@ -1535,42 +1779,88 @@ const cases = [
     topic: "IA",
     sourceGroup: "Casos agregados",
     title: "Chatbot publico conectado a conocimiento interno",
-    source: "Respuesta adjunta por usuario, Caso 9; consigna sintetizada",
+    source: "Respuesta adjunta por usuario, Caso 9; consigna reconstruida",
     status: "Revisado",
     summary: "Un chatbot publico conectado a bases internas puede filtrar documentos, contratos o datos de clientes mediante consultas o prompt injection.",
     prompt: {
       context: [
-        "Consigna sintetizada desde la respuesta adjunta: una empresa publica un chatbot para clientes y lo conecta a una base de conocimiento interna.",
-        "La base puede incluir documentos que no fueron aprobados para publico, informacion de clientes, politicas internas, contratos o precios.",
-        "Usuarios externos podrian intentar extraer informacion mediante consultas insistentes o prompt injection."
+        "Una empresa publica un chatbot de atencion al cliente en su sitio web. Para responder mejor, lo conecta a una base de conocimiento que tambien usan empleados internos.",
+        "El indice incluye manuales publicos, politicas internas, listas de precios especiales, contratos, tickets historicos y documentos con datos de clientes. No todo fue clasificado antes de indexarse.",
+        "Usuarios externos descubren que el bot responde sobre documentos internos si formulan preguntas insistentes. Otros prueban prompt injection para pedirle que ignore reglas y muestre fuentes completas.",
+        "La empresa no registra claramente que documentos recupero el sistema ni que fragmentos se usaron en cada respuesta."
       ],
       questions: [
-        "Identifique amenazas de seguridad y privacidad.",
-        "Proponga controles tecnicos y organizacionales.",
+        "Identifique amenazas de seguridad, privacidad e IA.",
+        "Explique por que conectar una base interna a un chatbot publico cambia la superficie de ataque.",
+        "Proponga controles tecnicos para que el bot solo use informacion aprobada para publico.",
+        "Indique controles organizacionales y evidencias necesarias para investigar una filtracion.",
         "Explique que parte de la triada CIA podria verse afectada."
       ]
     },
     sections: [
       {
-        title: "Respuesta por consigna",
+        title: "Ataque concreto",
         ordered: [
-          "Amenazas: indexar documentos internos por error, exposicion de clientes/contratos/precios/estrategias, prompt injection, extraccion de datos, respuestas inventadas y retencion de conversaciones con datos personales.",
-          "Controles tecnicos: separar base publica e interna, clasificar documentos antes de indexar, DLP, filtros de autorizacion, pruebas de prompt injection, limites de respuesta, logs, alertas por consultas sospechosas y revision periodica del indice.",
-          "Controles organizacionales: proceso de aprobacion de contenido publico, duenos por fuente, clasificacion de informacion, revision legal/seguridad, capacitacion y procedimiento de baja urgente.",
-          "CIA: confidencialidad es la principal; integridad por respuestas incorrectas o manipuladas; disponibilidad si el chatbot debe apagarse por incidente."
+          "El chatbot recibe una consulta publica.",
+          "El retrieval busca en un indice mezclado con documentos internos y publicos.",
+          "El modelo recibe fragmentos que el usuario externo no deberia ver.",
+          "Una pregunta insistente o prompt injection intenta forzar salida de fuentes, contratos, precios o tickets.",
+          "Como no hay logging de fuentes y fragmentos, despues es dificil saber que se filtro."
         ]
       },
       {
-        title: "Riesgo principal",
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: documentos internos indexados por error, datos de clientes en tickets, contratos/precios expuestos, prompt injection, extraccion iterativa, respuestas inventadas, retencion de chats y falta de trazabilidad de fuentes.",
+          "Cambio de superficie: el bot publico convierte un repositorio interno en una interfaz externa; si el indice no esta filtrado, preguntar equivale a intentar leer documentos.",
+          "Controles tecnicos: indice publico separado, clasificacion previa, allowlist de fuentes, DLP, filtros de autorizacion antes del retrieval, redaccion, limites de respuesta, pruebas adversariales y logging de fuentes/fragmentos.",
+          "Controles organizacionales: responsable por documento, flujo de aprobacion para publicar, revision legal/seguridad, proceso de baja urgente del indice, capacitacion y auditorias recurrentes.",
+          "Evidencias: prompt, usuario/sesion, documentos candidatos, fragmentos enviados al modelo, respuesta, filtros aplicados, bloqueos y version del indice.",
+          "CIA: confidencialidad es principal; integridad por respuestas manipuladas o falsas; disponibilidad si hay que apagar el bot o si queda inutilizable por abuso."
+        ]
+      },
+      {
+        title: "Por que no es solo un buscador",
         paragraphs: [
-          "El chatbot es una superficie publica. Si su indice mezcla fuentes internas y publicas, una pregunta externa puede convertirse en un canal de fuga."
+          "Un buscador interno normalmente exige identidad y permisos. Un chatbot publico conectado al mismo indice puede saltear esa barrera si recupera documentos con una cuenta tecnica o con permisos globales.",
+          "La autorizacion debe aplicarse antes de enviar contexto al modelo. Filtrar despues de generar la respuesta es tarde, porque el dato sensible ya entro al prompt."
+        ]
+      },
+      {
+        title: "Amenazas de IA",
+        bullets: [
+          "Prompt injection que intenta revelar instrucciones, fuentes completas o datos no aprobados.",
+          "Data exfiltration por preguntas iterativas, pidiendo pequenos fragmentos en muchas consultas.",
+          "Cross-context leakage si sesiones, caches o memorias se mezclan.",
+          "Hallucination: respuesta falsa que parece oficial y afecta decisiones de clientes.",
+          "Retencion de conversaciones con datos personales cargados por usuarios externos."
+        ]
+      },
+      {
+        title: "Controles tecnicos",
+        bullets: [
+          "Separar fisicamente/logicamente el indice publico del interno.",
+          "Clasificar documentos antes de indexar y excluir tickets, contratos y datos de clientes.",
+          "Usar retrieval con filtros de autorizacion y allowlist de colecciones publicas.",
+          "DLP y redaccion antes de indexar y antes de responder.",
+          "Rate limiting y deteccion de consultas de extraccion.",
+          "Pruebas de prompt injection y pruebas de regresion con preguntas prohibidas."
+        ]
+      },
+      {
+        title: "CIA y respuesta",
+        bullets: [
+          "Confidencialidad: contratos, tickets, precios y datos de clientes pueden salir por respuestas.",
+          "Integridad: el bot puede responder informacion falsa o manipulada por prompt injection.",
+          "Disponibilidad: un incidente puede obligar a desactivar el canal publico.",
+          "Respuesta: despublicar indice, preservar logs, identificar documentos expuestos, rotar claves si aparecieron secretos y revisar aprobacion de fuentes."
         ]
       },
       {
         type: "callout",
         tone: "warning",
         title: "Punto fino",
-        text: "No alcanza con decir que el bot 'solo responde preguntas'. Si ve documentos internos, puede exponerlos."
+        text: "No alcanza con poner instrucciones al modelo. Si el retrieval le entrega documentos internos, el bot ya tiene material para filtrar."
       }
     ]
   },
@@ -1579,37 +1869,83 @@ const cases = [
     topic: "IAM",
     sourceGroup: "Casos agregados",
     title: "Control de acceso fisico con reconocimiento facial",
-    source: "Respuesta adjunta por usuario, Caso 10; consigna sintetizada",
+    source: "Respuesta adjunta por usuario, Caso 10; consigna reconstruida",
     status: "Revisado",
     summary: "Un sistema de ingreso con reconocimiento facial usa biometria dificil de cambiar, con riesgos de filtracion, sesgo, falsos positivos y vigilancia laboral.",
     prompt: {
       context: [
-        "Consigna sintetizada desde la respuesta adjunta: una organizacion usa reconocimiento facial para controlar el acceso fisico de empleados o visitantes.",
-        "El sistema registra rostros o plantillas biometricas, decide ingresos permitidos/denegados y puede depender de un proveedor externo.",
-        "Existen riesgos de falsos positivos, falsos negativos, suplantacion, vigilancia laboral y falta de alternativa no biometrica."
+        "Una organizacion reemplaza tarjetas de ingreso por reconocimiento facial para empleados, contratistas y visitantes frecuentes.",
+        "El proveedor captura imagenes, genera plantillas biometricas y almacena registros de ingreso/egreso. Parte del procesamiento se realiza en la nube del proveedor.",
+        "El sistema permite entrada automatica a oficinas y sectores restringidos. Algunos empleados son rechazados por falsos negativos y seguridad habilita una excepcion manual.",
+        "No hay una alternativa no biometrica clara, no se explico cuanto tiempo se conservan plantillas ni si el proveedor puede usar imagenes para mejorar su algoritmo."
       ],
       questions: [
-        "Identifique amenazas de seguridad y privacidad.",
-        "Explique por que la biometria es especialmente delicada.",
+        "Identifique amenazas de seguridad, privacidad e IAM.",
+        "Explique por que la biometria es especialmente delicada frente a una contrasena o tarjeta.",
         "Proponga controles tecnicos y organizacionales.",
+        "Indique que evidencias deberia conservar el sistema y que eventos deberian alertar.",
         "Explique que parte de la triada CIA podria verse afectada."
       ]
     },
     sections: [
       {
-        title: "Respuesta por consigna",
-        ordered: [
-          "Amenazas: filtracion de plantillas biometricas, uso secundario de rostros, suplantacion con foto/video/mascara, falso positivo, falso negativo, vigilancia laboral excesiva, sesgos, dependencia de proveedor y falta de alternativa.",
-          "La biometria es delicada porque no se cambia como una contrasena; si se filtra una plantilla facial, el impacto puede ser persistente.",
-          "Controles tecnicos: plantillas protegidas, cifrado, procesamiento local, deteccion de vida, pruebas anti-spoofing, logs, revision de falsos positivos/negativos, MFA o metodo alternativo, segmentacion, retencion limitada y borrado al egreso.",
-          "Controles organizacionales: finalidad precisa, evaluacion de proporcionalidad, alternativa no biometrica, informacion clara, contrato con proveedor, prohibicion de usos secundarios, auditorias y reclamos ante errores.",
-          "CIA: confidencialidad por biometria y registros de movimiento; integridad por decisiones incorrectas de acceso; disponibilidad si el sistema bloquea ingresos legitimos."
+        title: "Lectura del caso",
+        paragraphs: [
+          "El reconocimiento facial combina autenticacion, control fisico y privacidad. No es solo una mejora de comodidad: convierte el rostro y los movimientos de entrada/salida en datos persistentes.",
+          "La decision debe justificarse por proporcionalidad. Si tarjetas, credenciales, PIN o MFA fisico alcanzan para el riesgo, la biometria puede ser excesiva."
         ]
       },
       {
-        title: "Como defender el analisis",
-        paragraphs: [
-          "La comodidad no vuelve proporcional al reconocimiento facial. Antes de implementarlo hay que justificar por que no alcanzan tarjetas, credenciales, PIN o MFA tradicional, y asegurar una alternativa para quien no pueda o no quiera usar biometria."
+        title: "Respuesta por consigna",
+        ordered: [
+          "Amenazas: filtracion de plantillas biometricas, uso secundario de rostros, suplantacion con foto/video, falsos positivos, falsos negativos, sesgos, vigilancia laboral excesiva, dependencia del proveedor y excepciones manuales sin control.",
+          "Biometria: es delicada porque no se rota como una contrasena; si se filtra una plantilla facial, el impacto puede persistir y afectar otros sistemas que usen rostro.",
+          "Controles tecnicos: plantillas protegidas, cifrado, procesamiento local cuando sea posible, deteccion de vida, pruebas anti-suplantacion, segmentacion, MFA o factor adicional en zonas criticas, logs, retencion limitada y borrado al egreso.",
+          "Controles organizacionales: finalidad precisa, evaluacion de proporcionalidad, alternativa no biometrica, informacion clara, contrato con no-training/no-uso secundario, auditoria de sesgos y procedimiento de reclamo.",
+          "Evidencias y alertas: intentos fallidos, ingresos fuera de horario, excepciones manuales, cambios de plantilla, altas/bajas, accesos a sectores criticos y actividad del proveedor.",
+          "CIA: confidencialidad por plantillas y movimientos; integridad por decisiones incorrectas de acceso; disponibilidad si falsos negativos bloquean ingresos legitimos."
+        ]
+      },
+      {
+        title: "Amenazas concretas",
+        bullets: [
+          "Robo de plantillas biometricas en proveedor o sistema interno.",
+          "Suplantacion con foto, video o mascara si no hay prueba de vida.",
+          "Falso positivo que permite ingresar a una persona no autorizada.",
+          "Falso negativo que bloquea a un empleado legitimo y fuerza excepciones.",
+          "Uso de registros de ingreso/egreso para vigilancia laboral fuera de la finalidad declarada.",
+          "Proveedor reutiliza imagenes para entrenamiento o mejora del servicio sin permiso claro."
+        ]
+      },
+      {
+        title: "Controles tecnicos",
+        bullets: [
+          "Almacenar plantillas, no imagenes crudas, salvo necesidad justificada.",
+          "Cifrado en reposo/transito y gestion separada de claves.",
+          "Procesamiento local o edge cuando reduzca exposicion al proveedor.",
+          "Deteccion de vida y pruebas anti-suplantacion antes de habilitar ingreso automatico.",
+          "Factor adicional para areas criticas: tarjeta, PIN o aprobacion de seguridad.",
+          "Borrado de plantillas al egreso y revision periodica de identidades activas."
+        ]
+      },
+      {
+        title: "Controles organizacionales",
+        bullets: [
+          "Evaluar si la biometria es proporcional frente a alternativas menos invasivas.",
+          "Informar finalidad, datos capturados, retencion, proveedor, derechos y canal de reclamo.",
+          "Ofrecer alternativa no biometrica para casos justificados.",
+          "Contrato con proveedor: no-training, no uso secundario, subprocesadores, auditoria, borrado y notificacion de incidentes.",
+          "Medir falsos positivos/negativos por grupos para detectar sesgos.",
+          "Definir reglas para excepciones manuales y revisarlas."
+        ]
+      },
+      {
+        title: "CIA y accountability",
+        bullets: [
+          "Confidencialidad: rostro, plantilla biometrica y patrones de movimiento son datos sensibles.",
+          "Integridad: una decision de match incorrecta puede permitir o negar acceso indebidamente.",
+          "Disponibilidad: una falla del proveedor o del modelo puede bloquear ingresos a sectores de trabajo.",
+          "Accountability: cada excepcion manual debe quedar asociada a una persona de seguridad, motivo y aprobacion."
         ]
       },
       {
@@ -1654,11 +1990,11 @@ const escapeHtml = (value) =>
 const topics = ["Todos", ...Array.from(new Set(cases.map((item) => item.topic)))];
 
 function getVisibleCases() {
-  const q = normalize(state.query.trim());
+  const queryTerms = normalize(state.query.trim()).split(/\s+/).filter(Boolean);
   return cases.filter((item) => {
     const byTopic = state.activeTopic === "Todos" || item.topic === state.activeTopic;
     if (!byTopic) return false;
-    if (!q) return true;
+    if (queryTerms.length === 0) return true;
     const haystack = normalize([
       item.id,
       item.title,
@@ -1676,7 +2012,7 @@ function getVisibleCases() {
       item.prompt?.context,
       item.prompt?.questions
     ].join(" "));
-    return haystack.includes(q);
+    return queryTerms.every((term) => haystack.includes(term));
   });
 }
 
@@ -1768,11 +2104,11 @@ function renderSourcePanel(item) {
     : "";
 
   return `
-    <section class="source-panel" aria-label="Consigna original cargada por usuario">
+    <section class="source-panel" aria-label="${escapeHtml(item.sourceLabel || "Consigna original")}">
       <div class="source-head">
         <div>
-          <p class="eyebrow">Consigna original</p>
-          <h3>Texto del caso</h3>
+          <p class="eyebrow">${escapeHtml(item.sourceLabel || "Consigna original")}</p>
+          <h3>${escapeHtml(item.sourceTitle || "Texto del caso")}</h3>
         </div>
         <p>${escapeHtml(item.source)}</p>
       </div>

@@ -2,6 +2,8 @@
 
 Interactive study tool for the Criptografia y Ciberseguridad partial exam. The site focuses on case-study analysis, not definition memorization.
 
+The first entry, `GX-00`, is a transversal checklist for points that often apply across cases: assets, CIA, threat/vulnerability/risk, evidence, privacy, providers, IA, cloud, AppSec, ransomware, and limits of common controls.
+
 ## Local Usage
 
 Open `study-tool/index.html` in a browser, or serve the folder locally:

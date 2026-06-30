@@ -286,6 +286,10 @@ main:focus-visible {
   box-shadow: var(--shadow);
 }
 
+.case-title > * {
+  min-width: 0;
+}
+
 .case-title h2 {
   max-width: 13ch;
   font-size: 2rem;
@@ -301,6 +305,12 @@ main:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  max-width: 100%;
+}
+
+.meta-row .meta-pill {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .topic-pill {
